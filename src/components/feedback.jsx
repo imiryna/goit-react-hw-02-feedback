@@ -1,17 +1,14 @@
 import React, { Component } from 'react';
-import {
-  ContainerCss,
-  DescriptionCss,
-  BoxButtonCss,
-  BtnCss,
-  TextCss,
-} from './feedback.styled';
+import { Buttons } from './buttons/buttons';
+
+import { ContainerCss, DescriptionCss, TextCss } from './feedback.styled';
 
 export class FeedbackClass extends Component {
   state = {
     good: 0,
     neutral: 0,
     bad: 0,
+    total: 0,
   };
 
   handleIncrementBad = () => {
@@ -20,6 +17,7 @@ export class FeedbackClass extends Component {
         bad: preState.bad + 1,
       };
     });
+    this.countTotalFeedback();
   };
 
   handleIncrementGood = () => {
@@ -28,6 +26,7 @@ export class FeedbackClass extends Component {
         good: preState.good + 1,
       };
     });
+    this.countTotalFeedback();
   };
 
   handleIncrementNeutral = () => {
@@ -36,27 +35,32 @@ export class FeedbackClass extends Component {
         neutral: preState.neutral + 1,
       };
     });
+    this.countTotalFeedback();
+  };
+
+  countTotalFeedback = () => {
+    this.setState(() => {
+      return {
+        total: this.state.good + this.state.neutral + this.state.bad,
+      };
+    });
   };
 
   render() {
     return (
       <ContainerCss>
         <DescriptionCss>Please leave feedback</DescriptionCss>
-        <BoxButtonCss>
-          <BtnCss type="button" onClick={this.handleIncrementGood}>
-            Good
-          </BtnCss>
-          <BtnCss type="button" onClick={this.handleIncrementNeutral}>
-            Neutral
-          </BtnCss>
-          <BtnCss type="button" onClick={this.handleIncrementBad}>
-            Bad
-          </BtnCss>
-        </BoxButtonCss>
+        <Buttons
+          onIncrementGood={this.handleIncrementGood}
+          onIncrementNeutral={this.handleIncrementNeutral}
+          onIncrementBad={this.handleIncrementBad}
+        />
+
         <DescriptionCss>Statistics</DescriptionCss>
         <TextCss>Good: {this.state.good}</TextCss>
         <TextCss>Neutral: {this.state.neutral}</TextCss>
         <TextCss>Bad: {this.state.bad}</TextCss>
+        <TextCss>Total: {this.state.total}</TextCss>
       </ContainerCss>
     );
   }
