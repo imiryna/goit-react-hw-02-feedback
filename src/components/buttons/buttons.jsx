@@ -1,20 +1,16 @@
 import React from 'react';
 import { BoxButtonCss, BtnCss } from './buttons.styled';
 
-export const Buttons = ({
-  onIncrementGood,
-  onIncrementNeutral,
-  onIncrementBad,
-}) => (
+export const ButtonBox = ({ options, onLeaveFeedback }) => (
   <BoxButtonCss>
-    <BtnCss type="button" onClick={onIncrementGood}>
-      Good
-    </BtnCss>
-    <BtnCss type="button" onClick={onIncrementNeutral}>
-      Neutral
-    </BtnCss>
-    <BtnCss type="button" onClick={onIncrementBad}>
-      Bad
-    </BtnCss>
+    {options.map(option => (
+      <BtnCss
+        key={option}
+        type="button"
+        onClick={() => onLeaveFeedback(option)}
+      >
+        {option}
+      </BtnCss>
+    ))}
   </BoxButtonCss>
 );
